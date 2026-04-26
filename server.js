@@ -58,4 +58,20 @@ if (method === 'OPTIONS') {
             body += chunk.toString();
         });
 
+req.on('end', () => {
+            try {
+                const newMovie = JSON.parse(body);
+                const movies = readData();
+                const id = movies.length > 0 ? Math.max(...movies.map(m => m.id)) + 1 : 1;
+                newMovie.id = id;
+                movies.push(newMovie);
+                writeData(movies);
+                res.writeHead(201, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify(newMovie));
+            } catch (error) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: 'Invalid JSON' }));
+            }
+        });
+    }
     
