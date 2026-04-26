@@ -75,3 +75,32 @@ req.on('end', () => {
         });
     }
     
+else if (pathname === '/movies' && method === 'PUT') {
+        const id = parsedUrl.query.id;
+        if (!id) {
+            res.writeHead(400, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'ID required' }));
+            return;
+        }
+        
+        let body = '';
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+        req.on('end', () => {
+            try {
+                const updates = JSON.parse(body);
+                const movies = readData();
+                const index = movies.findIndex(m => m.id === parseInt(id));
+                
+                if (index !== -1) {
+                    movies[index] = { ...movies[index], ...updates, id: parseInt(id) };
+                    writeData(movies);
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify(movies[index]));
+                } else {
+                    res.writeHead(404, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ error: 'Movie not found' }));
+                }
+
+            
