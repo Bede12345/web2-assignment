@@ -137,3 +137,13 @@ const movies = readData();
         res.end(JSON.stringify({ error: 'Route not found' }));
     }
 });
+
+server.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log('Available endpoints:');
+    console.log('GET /movies - Get all movies');
+    console.log('GET /movies?id=1 - Get movie by ID');
+    console.log('POST /movies - Create a new movie');
+    console.log('PUT /movies?id=1 - Update a movie');
+    console.log('DELETE /movies?id=1 - Delete a movie');
+});
