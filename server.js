@@ -103,4 +103,18 @@ else if (pathname === '/movies' && method === 'PUT') {
                     res.end(JSON.stringify({ error: 'Movie not found' }));
                 }
 
+} catch (error) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: 'Invalid JSON' }));
+            }
+        });
+    }
+
+    else if (pathname === '/movies' && method === 'DELETE') {
+        const id = parsedUrl.query.id;
+        if (!id) {
+            res.writeHead(400, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'ID required' }));
+            return;
+        }
             
