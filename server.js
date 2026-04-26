@@ -13,3 +13,7 @@ const readData = () => {
         return [];
     }
 }
+
+const writeData = (data) => {
+    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+}
