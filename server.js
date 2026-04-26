@@ -118,3 +118,22 @@ else if (pathname === '/movies' && method === 'PUT') {
             return;
         }
             
+const movies = readData();
+        const index = movies.findIndex(m => m.id === parseInt(id));
+        
+        if (index !== -1) {
+            const deleted = movies.splice(index, 1);
+            writeData(movies);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(deleted[0]));
+        } else {
+            res.writeHead(404, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Movie not found' }));
+        }
+    }
+
+    else {
+        res.writeHead(404, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Route not found' }));
+    }
+});
