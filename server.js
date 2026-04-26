@@ -17,3 +17,13 @@ const readData = () => {
 const writeData = (data) => {
     fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
 }
+
+const server = http.createServer((req, res) => {
+    const parsedUrl = url.parse(req.url, true);
+    const pathname = parsedUrl.pathname;
+    const method = req.method;
+
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
