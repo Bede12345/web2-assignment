@@ -3,7 +3,7 @@ const fs = require('fs');
 const url = require('url');
 
 const DATA_FILE = './data.json';
-const PORT = 3002;
+const PORT = 3001;
 
 const readData = () => {
     try {
@@ -27,7 +27,7 @@ const server = http.createServer((req, res) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-    if (method === 'OPTIONS') {
+if (method === 'OPTIONS') {
         res.writeHead(200);
         res.end();
         return;
@@ -57,7 +57,8 @@ const server = http.createServer((req, res) => {
         req.on('data', chunk => {
             body += chunk.toString();
         });
-        req.on('end', () => {
+
+req.on('end', () => {
             try {
                 const newMovie = JSON.parse(body);
                 const movies = readData();
@@ -73,8 +74,8 @@ const server = http.createServer((req, res) => {
             }
         });
     }
-
-    else if (pathname === '/movies' && method === 'PUT') {
+    
+else if (pathname === '/movies' && method === 'PUT') {
         const id = parsedUrl.query.id;
         if (!id) {
             res.writeHead(400, { 'Content-Type': 'application/json' });
@@ -101,7 +102,8 @@ const server = http.createServer((req, res) => {
                     res.writeHead(404, { 'Content-Type': 'application/json' });
                     res.end(JSON.stringify({ error: 'Movie not found' }));
                 }
-            } catch (error) {
+
+} catch (error) {
                 res.writeHead(400, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ error: 'Invalid JSON' }));
             }
@@ -115,8 +117,8 @@ const server = http.createServer((req, res) => {
             res.end(JSON.stringify({ error: 'ID required' }));
             return;
         }
-        
-        const movies = readData();
+            
+const movies = readData();
         const index = movies.findIndex(m => m.id === parseInt(id));
         
         if (index !== -1) {
