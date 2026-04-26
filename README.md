@@ -6,3 +6,7 @@ A simple REST API built with Node.js core modules (http and fs).
 - Create, Read, Update, Delete movie reviews
 - Data persistence using JSON file storage
 - No external frameworks
+## Installation
+```bash
+npm install
+node server.js
